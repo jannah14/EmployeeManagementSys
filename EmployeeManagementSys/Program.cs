@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using EmployeeManagementSys.Services;
+using EmployeeManagementSys.Repos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+//register in IoC services and repositories
+builder.Services.RegisterServices();
+builder.Services.RegisterRepositories();
 
 var app = builder.Build();
 

@@ -4,7 +4,7 @@ namespace EmployeeManagementSys.DTOs
 {
     public class EmployeeDTO
     {
-        protected string? Id { get; set; }
+        internal string? Id { get; set; }
         public string Name { get; set; }
         public Position Position { get; set; }
         public double Salary { get; set; }
