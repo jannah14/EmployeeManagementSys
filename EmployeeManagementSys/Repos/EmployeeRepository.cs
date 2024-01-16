@@ -65,12 +65,7 @@ namespace EmployeeManagementSys.Repos
             }
         }
 
-        public ApplicationDbContext Get_dbContext()
-        {
-            return _dbContext;
-        }
-
-        public async Task<Employee?> GetEmployeeById(string userId, ApplicationDbContext _dbContext)
+        public async Task<Employee?> GetEmployeeById(string userId)
         {
             try
             {
