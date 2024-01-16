@@ -10,8 +10,8 @@ namespace EmployeeManagementSys.Services
         Task<EmployeeDTO?> GetEmployeeById(string employeeId); //return data for one employee based on Id
 
         Task<bool> DeleteEmployee(string employeeId);
-        Task<bool> UpdateEmployee(Employee user);
+        Task<bool> UpdateEmployee(EmployeeDTO user);
 
-        Task<bool> CreateEmployee(Employee user);
+        Task<bool> CreateEmployee(EmployeeDTO user);
     }
 }

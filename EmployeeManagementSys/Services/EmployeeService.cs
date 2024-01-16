@@ -1,33 +1,92 @@
-﻿using EmployeeManagementSys.DTOs;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using EmployeeManagementSys.DTOs;
 using EmployeeManagementSys.Models;
+using EmployeeManagementSys.Repos;
 
 namespace EmployeeManagementSys.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        public Task<bool> CreateEmployee(Employee user)
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IMapper _mapper;
+
+        public EmployeeService(IEmployeeRepository employeeRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _employeeRepository = employeeRepository;
+            _mapper = mapper;
         }
 
-        public Task<bool> DeleteEmployee(string employeeId)
+        public async Task<bool> CreateEmployee(EmployeeDTO employeeDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var employee = _mapper.Map<Employee>(employeeDTO);
+                return await _employeeRepository.CreateEmployee(employee);
+            }
+            catch (Exception)
+            {
+                // Handle exception, log, etc.
+                return false;
+            }
         }
 
-        public Task<EmployeeDTO?> GetEmployeeById(string employeeId)
+        public async Task<bool> DeleteEmployee(string employeeId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _employeeRepository.DeleteEmployee(employeeId);
+            }
+            catch (Exception)
+            {
+                // Handle exception, log, etc.
+                return false;
+            }
         }
 
-        public Task<List<EmployeeDTO>?> GetEmployees()
+        public async Task<EmployeeDTO?> GetEmployeeById(string employeeId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var employee = await _employeeRepository.GetEmployeeById(employeeId);
+                return _mapper.Map<EmployeeDTO>(employee);
+            }
+            catch (Exception)
+            {
+                // Handle exception, log, etc.
+                return null;
+            }
         }
 
-        public Task<bool> UpdateEmployee(Employee user)
+        public async Task<List<EmployeeDTO>?> GetEmployees()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var employees = await _employeeRepository.GetEmployees();
+                return _mapper.Map<List<EmployeeDTO>>(employees);
+            }
+            catch (Exception)
+            {
+                // Handle exception, log, etc.
+                return null;
+            }
+        }
+
+        public async Task<bool> UpdateEmployee(EmployeeDTO employeeDTO)
+        {
+            try
+            {
+                var employee = _mapper.Map<Employee>(employeeDTO);
+                return await _employeeRepository.UpdateEmployee(employee);
+            }
+            catch (Exception)
+            {
+                // Handle exception, log, etc.
+                return false;
+            }
         }
     }
 }
