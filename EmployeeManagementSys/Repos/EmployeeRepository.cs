@@ -1,32 +1,101 @@
-﻿using EmployeeManagementSys.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EmployeeManagementSys.Data;
+using EmployeeManagementSys.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagementSys.Repos
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        public Task<bool> CreateEmployee(Employee user)
+        private readonly ApplicationDbContext _dbContext;
+
+        public EmployeeRepository(ApplicationDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
         }
 
-        public Task<bool> DeleteEmployee(string userId)
+        public async Task<bool> CreateEmployee(Employee employee)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbContext.Employees.Add(employee);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred");
+                return false;
+            }
         }
 
-        public Task<List<Employee>> GetEmployee(string adminId)
+        public async Task<bool> DeleteEmployee(string userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var employee = await _dbContext.Employees.FindAsync(userId);
+                if (employee != null)
+                {
+                    _dbContext.Employees.Remove(employee);
+                    await _dbContext.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred");
+                return false;
+            }
         }
 
-        public Task<Employee> GetEmployeeById(string userId)
+        public async Task<List<Employee>?> GetEmployees()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _dbContext.Employees.ToListAsync();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred");
+                return null;
+            }
         }
 
-        public Task<bool> UpdateEmployee(Employee user)
+        public ApplicationDbContext Get_dbContext()
         {
-            throw new NotImplementedException();
+            return _dbContext;
+        }
+
+        public async Task<Employee?> GetEmployeeById(string userId, ApplicationDbContext _dbContext)
+        {
+            try
+            {
+                return await _dbContext.Employees.FindAsync(userId);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred");
+                return null;
+            }
+        }
+
+        public async Task<bool> UpdateEmployee(Employee employee)
+        {
+            try
+            {
+                _dbContext.Entry(employee).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred");
+                return false;
+            }
         }
     }
 }
