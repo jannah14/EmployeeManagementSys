@@ -7,6 +7,11 @@
         public Position Position { get; set; }
         public double Salary { get; set; }
 
+        public Employee()
+        {
+            ID = Guid.NewGuid().ToString();
+        }
+
     }
 
     public enum Position
