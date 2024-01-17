@@ -1,0 +1,22 @@
+﻿@model EmployeeManagementSys.DTOs.EmployeeDTO
+
+<h2>Delete Employee</h2>
+
+<div>
+    <h4>Are you sure you want to delete this employee?</h4>
+    <dl class="dl-horizontal">
+        <dt>Name</dt>
+        <dd>@Model.Name</dd>
+
+        <dt>Position</dt>
+        <dd>@Model.Position</dd>
+
+        <dt>Salary</dt>
+        <dd>@Model.Salary</dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

@@ -1,0 +1,21 @@
+﻿@model EmployeeManagementSys.DTOs.EmployeeDTO
+
+<h2>Employee Details</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Name</dt>
+        <dd>@Model.Name</dd>
+
+        <dt>Position</dt>
+        <dd>@Model.Position</dd>
+
+        <dt>Salary</dt>
+        <dd>@Model.Salary</dd>
+    </dl>
+</div>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</p>
